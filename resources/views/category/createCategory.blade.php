@@ -3,7 +3,7 @@
   integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
   <x-slot name="header">
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-          {{ __('Dashboard') }}
+          {{ __('Catégories') }}
       </h2>
   </x-slot>
 
@@ -15,30 +15,20 @@
                   <div class="container h-100 mt-5">
                     <div class="row h-100 justify-content-center align-items-center">
                       <div class="col-10 col-md-8 col-lg-6">
-                        <h3 class="flex justify-content-center">Création de l'article</h3>
-                        <form action="{{ route('dashboard.store') }}" method="post">
+                        <h3 class="flex justify-content-center">Création de la catégorie</h3>
+                        <form action="{{ route('category.store') }}" method="post">
                           @csrf
                           <div class="form-group flex flex-col">
                             <label for="title">Title</label>
-                            <input type="text" class="form-control" id="title" name="title" required>
+                            <input type="text" class="form-control" id="name_category" name="name_category" required>
                           </div>
                           <div class="form-group flex flex-col">
-                              <label for="description">Description</label>
-                              <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+                            <label for="description">Description</label>
+                            <textarea class="form-control" id="description_category" name="description_category" rows="3" required></textarea>
                           </div>
-                          <div class="form-group flex flex-col">
-                              <label for="content">Contenu</label>
-                              <textarea class="form-control" id="content" name="content" rows="3" required></textarea>
-                          </div>
-                          {{-- <div class="form-group flex flex-col">
-                            <label for="category">Catégories</label>
-                            @foreach ($categories as $category)
-                              <input class="form-control" type="checkbox" id="{{ $category->name_category }}"  name="{{ $category->name_category }}" rows="3">
-                            @endforeach
-                          </div> --}}
                           <br>
                           <div class="flex justify-content-center">
-                            <button type="submit" class="btn btn-primary">Création de l'article</button>
+                            <button type="submit" class="btn btn-primary">Création de la catégorie</button>
                           </div>
                         </form>
                       </div>

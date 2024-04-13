@@ -20,7 +20,7 @@
                         @csrf
                         @method('PUT')
                         <div class="form-group flex flex-col">
-                          <label for="title" class="flex">Title</label>
+                          <label for="title" class="flex">Titre</label>
                           <input type="text" class="form-control" id="title" name="title"
                             value="{{ $post->title }}" required>
                         </div>
@@ -32,6 +32,12 @@
                           <label for="content">Contenu</label>
                           <textarea class="form-control" id="content" name="content" rows="3" required>{{ $post->content }}</textarea>
                         </div>
+                        {{-- <div class="form-group flex flex-col">
+                          <label for="category">Catégories</label>
+                          @foreach ($categories as $category)
+                            <input class="form-control" type="checkbox" id="action"  name="{{ $category->name_category }}" rows="3">
+                          @endforeach
+                        </div> --}}
                         <div class="flex justify-center	">
                           <button type="submit" class="btn mt-3 btn-primary border border-black rounded">Modifier l'article</button>
                         </div>

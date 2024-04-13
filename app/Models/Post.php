@@ -13,6 +13,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 // use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\User;
+use App\Models\Categories;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 
 
@@ -41,4 +43,9 @@ class Post extends Model
     // {
     //     return $this->belongsToMany(Category::class);
     // }
+
+    public function posts(): HasMany
+    {
+        return $this->hasMany(Categories::class);
+    }
 }
