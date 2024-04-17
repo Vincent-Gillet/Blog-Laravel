@@ -32,14 +32,21 @@
                           <label for="content">Contenu</label>
                           <textarea class="form-control" id="content" name="content" rows="3" required>{{ $post->content }}</textarea>
                         </div>
-                        {{-- <div class="form-group flex flex-col">
+                        <div class="form-group flex flex-col">
                           <label for="category">Catégories</label>
-                          @foreach ($categories as $category)
-                            <input class="form-control" type="checkbox" id="action"  name="{{ $category->name_category }}" rows="3">
-                          @endforeach
-                        </div> --}}
+                            <select id="category" name="categories[]" class="form-control" multiple>
+                              @foreach ($categories as $category)
+            			              <option value="{{ $category->id }}" {{ in_array($category->id, $post->categories->pluck('id')->toArray()) ? 'selected' : '' }}>
+                                    {{ $category->name_category }}
+                                </option>
+                              @endforeach
+                            </select>
+                          </div>
                         <div class="flex justify-center	">
                           <button type="submit" class="btn mt-3 btn-primary border border-black rounded">Modifier l'article</button>
+                          @error('title')
+                              <div class="alert alert-danger">{{ $message }}</div>
+                          @enderror
                         </div>
                       </form>
                     </div>

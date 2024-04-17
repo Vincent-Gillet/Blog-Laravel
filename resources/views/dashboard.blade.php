@@ -49,11 +49,16 @@
                                 <div class="card-body">
                                   <p class="card-text">{{ $post->name }}</p>
                                 </div>
-                                {{-- <div class="card-body">
-                                  @foreach ($categories as $category)                          
+                                <div class="card-body">
+                                  <h5>Auteur :</h5>
+                                  <p>{{ $post->user->name }}</p>
+                                </div>
+                                <div class="card-body">
+                                  <h5>Catégories :</h5>
+                                  @foreach ($post->categories as $category)
                                     <p>{{ $category->name_category }}</p>
                                   @endforeach
-                                </div> --}}
+                                </div>
                                 <div class="card-footer">
                                   <div class="row">
                                     <div class="col-sm">

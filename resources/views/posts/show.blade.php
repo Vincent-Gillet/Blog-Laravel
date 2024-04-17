@@ -26,13 +26,15 @@
                           <p>{{ $post->content }}</p>
                         </div>
                         <div class="form-group flex flex-col">
+                          <h5>Auteur :</h5>
                           <p>{{ $post->user_id }}</p>
                         </div>
-                        {{-- <div class="form-group flex flex-col">
-                          @foreach ($categories as $category)                          
-                            <p>{{ $category->name_category }}</p>
+                        <div class="form-group flex flex-col">
+                          <h5>Catégories :</h5>
+                          @foreach ($categories as $category)
+                            <p>- {{ $category->name_category }}</p>
                           @endforeach
-                        </div> --}}
+                        </div>
                     </div>
                   </div>
                 </div>

@@ -16,14 +16,14 @@ class Category extends Model
         'description_category',
     ];
 
-    // public function posts(): BelongsToMany
-    // {
-    //     return $this->belongsToMany(Post::class);
-    // }
-
-    public function posts(): HasMany
+    public function posts(): BelongsToMany
     {
-        return $this->hasMany(Post::class);
+        return $this->belongsToMany(Post::class);
     }
+
+    // public function posts(): HasMany
+    // {
+    //     return $this->hasMany(Post::class);
+    // }
 
 }

@@ -30,12 +30,20 @@
                               <label for="content">Contenu</label>
                               <textarea class="form-control" id="content" name="content" rows="3" required></textarea>
                           </div>
-                          {{-- <div class="form-group flex flex-col">
-                            <label for="category">Catégories</label>
-                            @foreach ($categories as $category)
-                              <input class="form-control" type="checkbox" id="{{ $category->name_category }}"  name="{{ $category->name_category }}" rows="3">
-                            @endforeach
-                          </div> --}}
+                          <div class="form-group flex flex-col">
+                          <label for="category">Catégories</label>
+                            <select id="category" name="categories[]" class="form-control" multiple>
+
+                              @foreach ($categories as $category)
+            			              <option value="{{ $category->id }}">
+                                    {{ $category->name_category }}
+                                </option>
+                              @endforeach
+                              
+                            </select>
+                          </div>
+
+
                           <br>
                           <div class="flex justify-content-center">
                             <button type="submit" class="btn btn-primary">Création de l'article</button>

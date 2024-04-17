@@ -39,13 +39,13 @@ class Post extends Model
         return $this->belongsTo(User::class);
     }
 
-    // public function categories(): BelongsToMany
-    // {
-    //     return $this->belongsToMany(Category::class);
-    // }
-
-    public function posts(): HasMany
+    public function categories(): BelongsToMany
     {
-        return $this->hasMany(Categories::class);
+        return $this->belongsToMany(Category::class);
     }
+
+    // public function categories(): HasMany
+    // {
+    //     return $this->hasMany(Category::class);
+    // }
 }

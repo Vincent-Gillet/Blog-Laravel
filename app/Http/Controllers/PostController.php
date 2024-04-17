@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\Post;
+use Illuminate\Console\View\Components\Task;
 use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
@@ -26,6 +28,8 @@ class PostController extends Controller
    */
   public function store(Request $request)
   {
+
+
     $request->validate([
       'title' => 'required|max:255',
       'content' => 'required',
@@ -38,6 +42,9 @@ class PostController extends Controller
     $post->content = $request->content;
     $post->user_id = Auth::id();
     $post->save();
+
+
+    $post->categories()->attach($request->categories) ;
 
     return redirect()->route('dashboard')
       ->with('success', 'Post created successfully.');
@@ -58,6 +65,21 @@ class PostController extends Controller
     ]);
     $post = Post::find($id);
     $post->update($request->all());
+
+    // $post->categories()->attach($request->categories) ;
+
+        // $post = $request->category_id; 
+  
+      // $categories->update($request->all());
+
+    // $categories = Category::all();
+
+    // $categories = $post->categories();
+
+    // $categories->categories()->sync($request->category_id);
+
+    $post->categories()->sync($request->categories);
+
     return redirect()->route('dashboard')
       ->with('success', 'Post updated successfully.');
   }
@@ -82,7 +104,10 @@ class PostController extends Controller
    */
   public function create()
   {
-    return view('posts.create');
+    $categories = Category::all();
+    return view('posts.create', [
+    'categories' => $categories,
+    ]);
   }
   /**
    * Display the specified resource.
@@ -92,8 +117,11 @@ class PostController extends Controller
    */
   public function show($id)
   {
-    $post = Post::find($id);
-    return view('posts.show', compact('post'));
+    $post = Post::findOrFail($id);
+    // Récupérer les catégories associées au post
+    $categories = $post->categories()->get();
+
+    return view('posts.show', compact('post', 'categories'));
   }
   /**
    * Show the form for editing the specified post.
@@ -104,6 +132,10 @@ class PostController extends Controller
   public function edit($id)
   {
     $post = Post::find($id);
-    return view('posts.edit', compact('post'));
+    $categories = Category::all();
+
+    return view('posts.edit', compact('post'), [
+      'categories' => $categories,
+    ]);
   }
 }
