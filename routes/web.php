@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -51,6 +52,25 @@ Route::middleware('auth')->group(function () {
     // deletes a post
     Route::delete('/dashboard/category/{id}', CategoryController::class . '@destroy')->name('category.destroy');
 });
+
+
+Route::middleware('auth')->group(function () {
+    // returns the home page with all users
+    Route::get('/dashboard/users', UserController::class . '@index')->name('users');
+    // returns the form for adding a user
+    // Route::get('/dashboard/user-create', UserController::class . '@create')->name('user.create');
+    // // adds a user to the database
+    // Route::post('/dashboard/user-create', UserController::class . '@store')->name('user.store');
+    // returns a page that shows a full user
+    Route::get('/dashboard/user/{id}', UserController::class . '@show')->name('user.show');
+    // returns the form for editing a user
+    Route::get('/dashboard/user/{id}/edit', UserController::class . '@edit')->name('user.edit');
+    // updates a user
+    Route::put('/dashboard/user/{id}/edit', UserController::class . '@update')->name('user.update');
+    // deletes a user
+    Route::delete('/dashboard/user/{id}', UserController::class . '@destroy')->name('user.destroy');
+});
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
