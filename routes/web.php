@@ -7,7 +7,7 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Middleware\AdminMiddleware;
 
 
 Route::get('/legals', [PageController::class, 'legals'])->name('legals');
@@ -15,8 +15,6 @@ Route::get('/legals', [PageController::class, 'legals'])->name('legals');
 Route::get('/about_us', [PageController::class, 'about_us'])->name('about_us');
 
 Route::get('/', [PageController::class, 'articles'])->name('articles');
-
-
 
 Route::middleware('auth')->group(function () {
     // returns the home page with all posts
@@ -36,7 +34,7 @@ Route::middleware('auth')->group(function () {
 });
 
 
-Route::middleware('auth')->group(function () {
+Route::group(['middleware' => AdminMiddleware::class],function () {
     // returns the home page with all posts
     Route::get('/dashboard/categories', CategoryController::class . '@index')->name('categories');
     // returns the form for adding a post
@@ -51,16 +49,10 @@ Route::middleware('auth')->group(function () {
     Route::put('/dashboard/category/{id}/edit', CategoryController::class . '@update')->name('category.update');
     // deletes a post
     Route::delete('/dashboard/category/{id}', CategoryController::class . '@destroy')->name('category.destroy');
-});
 
 
-Route::middleware('auth')->group(function () {
     // returns the home page with all users
     Route::get('/dashboard/users', UserController::class . '@index')->name('users');
-    // returns the form for adding a user
-    // Route::get('/dashboard/user-create', UserController::class . '@create')->name('user.create');
-    // // adds a user to the database
-    // Route::post('/dashboard/user-create', UserController::class . '@store')->name('user.store');
     // returns a page that shows a full user
     Route::get('/dashboard/user/{id}', UserController::class . '@show')->name('user.show');
     // returns the form for editing a user
@@ -69,6 +61,16 @@ Route::middleware('auth')->group(function () {
     Route::put('/dashboard/user/{id}/edit', UserController::class . '@update')->name('user.update');
     // deletes a user
     Route::delete('/dashboard/user/{id}', UserController::class . '@destroy')->name('user.destroy');
+});
+
+
+Route::middleware(['auth', 'admin'])->group(function () {
+
+    // returns the form for adding a user
+    // Route::get('/dashboard/user-create', UserController::class . '@create')->name('user.create');
+    // // adds a user to the database
+    // Route::post('/dashboard/user-create', UserController::class . '@store')->name('user.store');
+
 });
 
 

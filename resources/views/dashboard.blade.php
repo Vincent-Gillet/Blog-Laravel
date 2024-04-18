@@ -16,7 +16,7 @@
                     <nav class="navbar navbar-expand-lg navbar-light">
                         <div class="container-fluid">
                           {{-- <a class="navbar-brand h1" href={{ route('dashboard') }}>Blog Laravel</a> --}}
-                          <div class="justify-end d-grid gap-3">
+                          <div class="d-grid gap-3 w-full">
                             <div class="col ">
                               <a id="ajouter" class="btn btn-primary text-white
                               {{-- link-dark text-decoration-none border border-black rounded-full px-4 py-3 bg-black text-white --}}
@@ -29,6 +29,21 @@
                               " href={{ route('category.create') }} onmouseover="this.className='btn btn-secondary text-white'"
                               onmouseout="this.className='btn btn-primary text-white'">Ajouter une catégorie</a>
                             </div>
+                            <form method="GET" action="{{ route('dashboard') }}" class="w-full
+                            ">
+                              <div class="form-group flex flex-col">
+                                  <label for="category">Catégories</label>
+                                  <select id="category" name="categories[]" class="form-control text-black" multiple>
+                                      @foreach ($categories as $category)
+                                          <option value="{{ $category->id }}">
+                                              {{ $category->name_category }}
+                                          </option>
+                                      @endforeach
+                                  </select>
+                              </div>
+                              <button type="submit" class="btn btn-primary">Afficher les articles</button>
+                              <button type="submit" formaction="{{ route('dashboard') }}" class="btn btn-primary">Voir tous les articles</button>
+                            </form>
                           </div>
                         </div>
                       </nav>

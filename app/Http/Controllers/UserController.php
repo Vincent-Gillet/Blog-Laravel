@@ -109,4 +109,14 @@ class UserController extends Controller
       'roles' => User::all(),
     ]);
   }
+
+  public function page()
+  {
+    return view('dashboard');
+
+      // Logique du contrôleur pour le dashboard de l'administrateur
+  }
+
+
+
 }

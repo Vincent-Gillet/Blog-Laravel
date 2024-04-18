@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Contracts\View\View;
 use App\Models\Post;
+use App\Models\Category;
+use Illuminate\Http\Request;
+
 
 class PageController extends Controller
 {
@@ -82,14 +85,25 @@ class PageController extends Controller
     // }
 
 
-        public function articles(): View
+    public function articles(Request $request): View
     {
         // $posts = Post::all();
-        $posts = Post::orderBy('id', 'desc')->take(6)->get();
 
-        return view('articles', 
-        ['posts'=>$posts]
-        );
+
+        $categories = Category::all();
+  
+        if ($request->has('categories')) {
+            $selectedCategories = $request->input('categories');
+    
+            $posts = Post::with('category')
+                ->whereIn('id', $selectedCategories)
+                ->orderBy('id', 'desc')
+                ->get();
+        } else {
+            $posts = Post::with('category')->orderBy('id', 'desc')->get();
+        }
+    
+        return view('articles', compact('posts', 'categories'));
     }
 
 //     public function anotherMethod(): View

@@ -15,11 +15,35 @@ class PostController extends Controller
    *
    * @return \Illuminate\Http\Response
    */
-  public function index()
+  // public function index()
+  // {
+  //   $posts = Post::all();
+  //   $categories = Category::all();
+
+  //   return view('dashboard', compact('posts', 'categories'));
+
+
+
+  // }
+  public function index(Request $request)
   {
-    $posts = Post::all();
-    return view('dashboard', compact('posts'));
+      $categories = Category::all();
+  
+      if ($request->has('categories')) {
+          $selectedCategories = $request->input('categories');
+  
+          $posts = Post::with('category')
+              ->whereIn('id', $selectedCategories)
+              ->orderBy('id', 'desc')
+              ->get();
+      } else {
+          $posts = Post::with('category')->orderBy('id', 'desc')->get();
+      }
+  
+      return view('dashboard', compact('posts', 'categories'));
   }
+
+
   /**
    * Store a newly created resource in storage.
    *
