@@ -22,7 +22,8 @@ class PostSeeder extends Seeder
             'user_id' => User::all()->random()->id,
             'title' => Str::random(10),
             'content' => Str::random(10),
-            'description' => Str::random(10)
+            'description' => Str::random(10),
+            'image' => 'https://via.placeholder.com/150'
         ]);
     }
 }

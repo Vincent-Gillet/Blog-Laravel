@@ -16,7 +16,7 @@
                   <div class="row h-100 justify-content-center align-items-center">
                     <div class="col-10 col-md-8 col-lg-6">
                       <h3 class="flex justify-center">Modifier l'article</h3>
-                      <form action="{{ route('dashboard.update', $post->id) }}" method="post">
+                      <form action="{{ route('dashboard.update', $post->id) }}" method="post" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="form-group flex flex-col">
@@ -34,14 +34,23 @@
                         </div>
                         <div class="form-group flex flex-col">
                           <label for="category">Catégories</label>
-                            <select id="category" name="categories[]" class="form-control" multiple>
-                              @foreach ($categories as $category)
-            			              <option value="{{ $category->id }}" {{ in_array($category->id, $post->categories->pluck('id')->toArray()) ? 'selected' : '' }}>
-                                    {{ $category->name_category }}
-                                </option>
-                              @endforeach
-                            </select>
-                          </div>
+                          <select id="category" name="categories[]" class="form-control" multiple>
+                            @foreach ($categories as $category)
+                              <option value="{{ $category->id }}" {{ in_array($category->id, $post->categories->pluck('id')->toArray()) ? 'selected' : '' }}>
+                                  {{ $category->name_category }}
+                              </option>
+                            @endforeach
+                          </select>
+                        </div>
+                        <div class="form-group flex flex-col">
+                          <label for="category">Image (resélectioner l'image même si elle ne change pas)</label>
+                          <img src="{{ Storage::url($post->picture) }}" alt="Image de l'article">                       
+                        </div>
+                        <div>
+                          <input type="file" name="picture" value="{{ $post->picture }}">
+                
+                          {{ $errors->first('picture', ':message') }}
+                        </div>
                         <div class="flex justify-center	">
                           <button type="submit" class="btn mt-3 btn-primary border border-black rounded">Modifier l'article</button>
                           @error('title')

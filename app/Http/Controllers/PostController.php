@@ -8,6 +8,7 @@ use App\Models\Post;
 use Illuminate\Console\View\Components\Task;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -61,10 +62,16 @@ class PostController extends Controller
       'description' => 'required',
     ]);
 
+    // $name = Storage::disk('local')->put('picture', $request->file('picture'));
+    $filename = time() . '.' . $request->picture->extension();
+
+    $path = $request->file('picture')->storeAs('public/picture', $filename);
+
     $post = new Post();
     $post->title = $request->title;
     $post->description = $request->description;
     $post->content = $request->content;
+    $post->picture = $path;
     $post->user_id = Auth::id();
     $post->save();
 
@@ -88,20 +95,25 @@ class PostController extends Controller
       'content' => 'required',
       'description' => 'required',
     ]);
+
+
+    if(isset($_FILES['fichier']))
+    {
+      $filename = time() . '.' . $request->picture->extension();
+      $path = $request->file('picture')->storeAs('public/picture', $filename);
+    }
+
     $post = Post::find($id);
-    $post->update($request->all());
+    $post->title = $request->title;
+    $post->description = $request->description;
+    $post->content = $request->content;
+    if(isset($_FILES['fichier']))
+    {
+      $post->picture = $path;
+    }
+    $post->update();
 
-    // $post->categories()->attach($request->categories) ;
 
-        // $post = $request->category_id; 
-  
-      // $categories->update($request->all());
-
-    // $categories = Category::all();
-
-    // $categories = $post->categories();
-
-    // $categories->categories()->sync($request->category_id);
 
     $post->categories()->sync($request->categories);
 

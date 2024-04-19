@@ -17,6 +17,9 @@
                     <div class="col-10 col-md-8 col-lg-6">
                       <h3 class="flex justify-center">Voir l'article</h3>
                         <div class="form-group flex flex-col">
+                          <img src="{{ Storage::url($post->picture) }}" alt="Image de l'article">                       
+                        </div>
+                        <div class="form-group flex flex-col">
                           <h4>{{ $post->title }}</h4>
                         </div>
                         <div class="form-group flex flex-col">
