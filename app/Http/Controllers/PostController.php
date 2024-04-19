@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Post;
 use Illuminate\Console\View\Components\Task;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class PostController extends Controller
 {
@@ -39,6 +40,8 @@ class PostController extends Controller
       } else {
           $posts = Post::with('category')->orderBy('id', 'desc')->get();
       }
+
+      $posts = Auth::user()->postsUser()->get();
   
       return view('dashboard', compact('posts', 'categories'));
   }
