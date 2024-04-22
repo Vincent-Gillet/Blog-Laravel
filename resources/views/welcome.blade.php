@@ -3,6 +3,9 @@
 
 @foreach($posts as $post)
     <div id="docs-card-content" class="flex flex-col items-start gap-6 bg-white rounded-lg w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-4 mb-4">
+        <div class="form-group flex flex-col">
+            <img src="{{ Storage::url($post->picture) }}" alt="Image de l'article">                       
+        </div>
         <h1>{{ $post->title }}</h1>
         <p>{{ $post->description }}</p>
         <p>{{ $post->content }}</p>

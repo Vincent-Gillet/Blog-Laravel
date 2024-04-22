@@ -16,7 +16,7 @@
                     <div class="row h-100 justify-content-center align-items-center">
                       <div class="col-10 col-md-8 col-lg-6">
                         <h3 class="flex justify-content-center">Création de l'article</h3>
-                        <form action="{{ route('dashboard.store') }}" method="post" enctype="multipart/form-data">
+                        <form id="contactForm" action="{{ route('dashboard.store') }}" method="post" enctype="multipart/form-data">
                           @csrf
                           <div class="form-group flex flex-col">
                             <label for="title">Title</label>
@@ -50,7 +50,9 @@
 
                           <br>
                           <div class="flex justify-content-center">
-                            <button type="submit" class="btn btn-primary">Création de l'article</button>
+                            <button type="submit" class="btn btn-primary">
+                              Création de l'article
+                            </button>
                           </div>
                         </form>
                       </div>

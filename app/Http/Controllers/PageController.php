@@ -98,9 +98,9 @@ class PageController extends Controller
             $posts = Post::with('category')
                 ->whereIn('id', $selectedCategories)
                 ->orderBy('id', 'desc')
-                ->get();
+                ->paginate(4);
         } else {
-            $posts = Post::with('category')->orderBy('id', 'desc')->get();
+            $posts = Post::with('category')->orderBy('id', 'desc')->paginate(4);
         }
     
         return view('articles', compact('posts', 'categories'));

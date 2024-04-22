@@ -53,6 +53,9 @@
                             <div class="flex items-start gap-6 lg:flex-col">
                               <div class="card w-100 h-100">
                                 <div class="card-header">
+                                  <div class="form-group flex flex-col">
+                                    <img src="{{ Storage::url($post->picture) }}" alt="Image de l'article">                       
+                                  </div>
                                   <h5 class="card-title">{{ $post->title }}</h5>
                                 </div>
                                 <div class="card-body">
@@ -96,6 +99,7 @@
                               </div>
                             </div>
                           @endforeach
+                          {{ $posts->links() }}
                         </div>
                       </div>
                 </div>

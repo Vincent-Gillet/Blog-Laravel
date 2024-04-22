@@ -37,12 +37,12 @@ class PostController extends Controller
           $posts = Post::with('category')
               ->whereIn('id', $selectedCategories)
               ->orderBy('id', 'desc')
-              ->get();
-      } else {
-          $posts = Post::with('category')->orderBy('id', 'desc')->get();
+              ->paginate(4);
+            } else {
+          $posts = Post::with('category')->orderBy('id', 'desc')->paginate(4);
       }
 
-      $posts = Auth::user()->postsUser()->get();
+      $posts = Auth::user()->postsUser()->paginate(4);
   
       return view('dashboard', compact('posts', 'categories'));
   }
@@ -62,19 +62,19 @@ class PostController extends Controller
       'description' => 'required',
     ]);
 
-    // $name = Storage::disk('local')->put('picture', $request->file('picture'));
-    $filename = time() . '.' . $request->picture->extension();
-
-    $path = $request->file('picture')->storeAs('public/picture', $filename);
-
     $post = new Post();
     $post->title = $request->title;
     $post->description = $request->description;
     $post->content = $request->content;
-    $post->picture = $path;
     $post->user_id = Auth::id();
-    $post->save();
 
+    if ($request->hasFile('picture')) {
+      $filename = time() . '.' . $request->picture->extension();
+      $path = $request->file('picture')->storeAs('public/picture', $filename);
+      $post->picture = $path;
+    }
+
+    $post->save();
 
     $post->categories()->attach($request->categories) ;
 
@@ -94,23 +94,28 @@ class PostController extends Controller
       'title' => 'required|max:255',
       'content' => 'required',
       'description' => 'required',
+      'picture' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
     ]);
-
-
-    if(isset($_FILES['fichier']))
-    {
-      $filename = time() . '.' . $request->picture->extension();
-      $path = $request->file('picture')->storeAs('public/picture', $filename);
-    }
 
     $post = Post::find($id);
     $post->title = $request->title;
     $post->description = $request->description;
     $post->content = $request->content;
-    if(isset($_FILES['fichier']))
-    {
+
+    // if(isset($_FILES['fichier']))
+    // {
+    if ($request->hasFile('picture')) {
+
+      $filename = time() . '.' . $request->picture->extension();
+      $path = $request->file('picture')->storeAs('public/picture', $filename);
       $post->picture = $path;
+
     }
+
+
+    // if(isset($_FILES['fichier']))
+    // {
+    // }
     $post->update();
 
 

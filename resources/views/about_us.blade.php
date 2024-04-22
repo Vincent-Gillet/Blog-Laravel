@@ -1,4 +1,6 @@
 @include('layouts.front.head')
-        {!! $title !!}
-        {!! $content !!}
+        <div class="bg-white rounded p-4">
+                {!! $title !!}
+                {!! $content !!}
+        </div>
 @include('layouts.front.footer')

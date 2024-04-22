@@ -43,7 +43,7 @@
                           </select>
                         </div>
                         <div class="form-group flex flex-col">
-                          <label for="category">Image (resélectioner l'image même si elle ne change pas)</label>
+                          <label for="category">Image</label>
                           <img src="{{ Storage::url($post->picture) }}" alt="Image de l'article">                       
                         </div>
                         <div>
